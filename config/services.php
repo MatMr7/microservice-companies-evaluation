@@ -30,4 +30,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'micro_companies' => [
+        'token' => env('COMPANY_MICRO_TOKEN'),
+        'url' => env('COMPANY_MICRO_URL'),
+    ],
+
 ];
