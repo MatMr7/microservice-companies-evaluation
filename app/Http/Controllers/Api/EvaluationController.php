@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEvaluation;
 use App\Http\Resources\EvaluationResource;
+use App\Jobs\EvaluationCreated;
 use App\Models\Evaluation;
 use App\Services\CompanyService;
 use Illuminate\Http\Request;
@@ -44,7 +45,7 @@ class EvaluationController extends Controller
             return response()->json([
                 'message' => "Company $company_uuid not found"
             ],$status);
-
+            EvaluationCreated::dispatch(json_decode($response)->data->email)->onQueue('queue_mail');
         $evaluation = $this->repository->create($request->validated());
         return new EvaluationResource($evaluation);
     }
